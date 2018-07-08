@@ -51,7 +51,17 @@
 
         // Script for adding marker on map click
         function onMapClick(e) {
-
+            //
+            var geojsonFeature = {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [e.latlng.lat, e.latlng.lng]
+                }
+            }
+           
+            //
             lat = e.latlng.lat;
             lon = e.latlng.lng;
 
@@ -63,13 +73,21 @@
             };
 
             //Add a marker to show where you clicked.
-            theMarker = L.marker(e.latlng, { title: "محل انتخاب شده", alt: "محل انتخاب شده", riseOnHover: true, draggable: true }).bindPopup("<input type='button' value='حذف' class='marker-delete-button'/>").addTo(map);
-            theMarker.on("popupopen", onPopupOpen);
-
-
-
-
-
+            //theMarker = L.marker(e.latlng, { title: "محل انتخاب شده", alt: "محل انتخاب شده", riseOnHover: true, draggable: true }).bindPopup("<input type='button' value='حذف' class='marker-delete-button'/>").addTo(map);
+            
+            L.geoJson(geojsonFeature, {
+                pointToLayer: function (feature, latlng) {
+                    theMarker = L.marker(e.latlng, {
+                        title: "Resource Location",
+                        alt: "Resource Location",
+                        riseOnHover: true,
+                        draggable: true,
+                    }).bindPopup("<input type='button' value='Delete this marker' class='marker-delete-button'/>");
+                    theMarker.on("popupopen", onPopupOpen);
+                    return theMarker;
+                }
+            }).addTo(map);
+           
 
 
             // var geojsonFeature = {
@@ -130,9 +148,8 @@
             var allMarkersGeoJsonArray = [];//new Array();
 
             $.each(map._layers, function (ml) {
-                //console.log(map._layers)
+                console.log("map._layers[ml].feature = ", map._layers[ml].feature);
                 if (map._layers[ml].feature) {
-
                     allMarkersObjArray.push(this)
                     allMarkersGeoJsonArray.push(JSON.stringify(this.toGeoJSON()))
                 }
