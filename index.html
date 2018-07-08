@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="leaflet.css">
+    <script src="leaflet.js"></script>
+    <!-- <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" /> -->
 </head>
 <style>
     html,
@@ -90,38 +92,6 @@
            
 
 
-            // var geojsonFeature = {
-            //     "type": "Feature",
-            //     "properties": {},
-            //     "geometry": {
-            //         "type": "Point",
-            //         "coordinates": [e.latlng.lat, e.latlng.lng]
-            //     }
-            // }
-
-            // var marker;
-
-            // var x= L.geoJson(geojsonFeature, {
-
-            //     pointToLayer: function (feature, latlng) {
-
-            //         marker = L.marker(e.latlng, {
-
-            //             title: "Resource Location",
-            //             alt: "Resource Location",
-            //             riseOnHover: true,
-            //             draggable: true,
-
-            //         }).bindPopup("<input type='button' value='Delete this marker' class='marker-delete-button'/>");
-
-            //         marker.on("popupopen", onPopupOpen);
-
-            //         return marker;
-            //     }
-            // });
-            // map.addLayer([]);
-            // map.addLayer(x);
-
         }
 
 
@@ -129,10 +99,6 @@
         function onPopupOpen() {
 
             var tempMarker = this;
-
-            //var tempMarkerGeoJSON = this.toGeoJSON();
-
-            //var lID = tempMarker._leaflet_id; // Getting Leaflet ID of this marker
 
             // To remove marker on click of delete
             $(".marker-delete-button:visible").click(function () {
@@ -148,14 +114,14 @@
             var allMarkersGeoJsonArray = [];//new Array();
 
             $.each(map._layers, function (ml) {
-                console.log("map._layers[ml].feature = ", map._layers[ml].feature);
+               //console.log("map._layers[ml].feature = ", map._layers[ml].feature);
                 if (map._layers[ml].feature) {
                     allMarkersObjArray.push(this)
                     allMarkersGeoJsonArray.push(JSON.stringify(this.toGeoJSON()))
                 }
             })
 
-            console.log(allMarkersObjArray);
+            //console.log(allMarkersObjArray);
             alert("total Markers : " + allMarkersGeoJsonArray.length + "\n\n" + allMarkersGeoJsonArray + "\n\n Also see your console for object view of this array");
         }
 
